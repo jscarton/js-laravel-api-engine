@@ -2,8 +2,6 @@ ARG PHP_VERSION=${PHP_VERSION}
 
 FROM php:${PHP_VERSION}-cli
 
-RUN echo "nameserver 8.8.8.8" >> /etc/resolv.conf
-
 # Install packages for required extensions
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
