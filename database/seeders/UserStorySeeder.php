@@ -4,48 +4,36 @@ namespace Database\Seeders;
 
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Str;
+
+
 
 class UserStorySeeder extends BaseSeeder
-{
-    /**
-     * Credentials
-     */
-    const ADMIN_CREDENTIALS = [
-        'email' => 'admin@admin.com',
-    ];
-
-    public function runFake()
+{    
+    public function runAlways()
     {
+		$ADMIN_CREDENTIALS = [
+			'name' => env('SYSADMIN_USER_NAME'),
+			'email' => env('SYSADMIN_EMAIL_ADDRESS'),
+			'password' => Str::random(64)
+		];
+
         // Grab all roles for reference
         $roles = Role::all();
 
         // Create an admin user
-        \App\Models\User::factory()->create([
-            'name'         => 'Admin',
-            'email'        => static::ADMIN_CREDENTIALS['email'],
-            'primary_role' => $roles->where('name', 'admin')->first()->role_id,
+        User::firstOrCreate([
+            'name'         => $ADMIN_CREDENTIALS['name'],
+            'email'        => $ADMIN_CREDENTIALS['email'],
+            'primary_role' => $roles->where('name', 'system-admin')->first()->role_id,
+			'password'	   => $ADMIN_CREDENTIALS['password'],
+			'email_verified_at' => now(),
+			'remember_token' => Str::random(10)
         ]);
 
-        // Create regular user
-        \App\Models\User::factory()->create([
-            'name'         => 'Bob',
-            'email'        => 'bob@bob.com',
-            'primary_role' => $roles->where('name', 'regular')->first()->role_id,
-        ]);
-
-        // Get some random roles to assign to users
-        $fakeRolesToAssignCount = 3;
-        $fakeRolesToAssign = RoleTableSeeder::getRandomRoles($fakeRolesToAssignCount);
-
-        // Assign fake roles to users
-        for ($i = 0; $i < 5; ++$i) {
-            $user = \App\Models\User::factory()->create([
-                'primary_role' => $roles->random()->role_id,
-            ]);
-
-            for ($j = 0; $j < count($fakeRolesToAssign); ++$j) {
-                $user->roles()->save($fakeRolesToAssign->shift());
-            }
-        }
+		$this->command->info('SYSADMIN User created, please take note of the random password, you won\'t see it again!');
+		$this->command->info('SYSADMIN NAME:'.$ADMIN_CREDENTIALS['name']);
+		$this->command->info('SYSADMIN EMAIL ADDRESS:'.$ADMIN_CREDENTIALS['email']);
+		$this->command->info('SYSADMIN PASSWORD:'.$ADMIN_CREDENTIALS['password']);
     }
 }
