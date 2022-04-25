@@ -7,7 +7,7 @@ class Role extends BaseModel
     /**
      * Role constants
      */
-    public const ROLE_ADMIN = 'admin';
+    public const ROLE_ADMIN = 'system-admin';
 
     /**
      * @var int Auto increments integer key
