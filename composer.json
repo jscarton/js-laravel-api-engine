@@ -1,6 +1,6 @@
 {
-    "name": "specialtactics/laravel-api-boilerplate",
-    "description": "An API boilerplate for Laravel",
+    "name": "jscarton/js-laravel-api-engine",
+    "description": "A Laravel API Engine to support multiple projects and databases",
     "keywords": [
         "laravel",
         "boilerplate",
@@ -12,8 +12,8 @@
     "type": "project",
     "authors": [
         {
-            "name": "Max Snow",
-            "email": "contact@maxsnow.me"
+            "name": "Juan Scarton",
+            "email": "juan@arepasapp.com"
         }
     ],
     "require": {
