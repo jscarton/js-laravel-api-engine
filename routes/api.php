@@ -67,5 +67,17 @@ $api->version('v1', ['middleware' => ['api']], function (Router $api) {
         $api->group(['prefix' => 'roles'], function (Router $api) {
             $api->get('/', 'App\Http\Controllers\RoleController@getAll');
         });
+
+		/*
+		* Projects
+		*/
+		$api->group(['prefix' => 'projects'], function (Router $api) {
+			$api->get('/', 'App\Http\Controllers\ProjectController@getAll');
+			$api->get('/{uuid}', 'App\Http\Controllers\ProjectController@get');
+			$api->post('/', 'App\Http\Controllers\ProjectController@post');
+			$api->patch('/{uuid}', 'App\Http\Controllers\ProjectController@patch');
+			$api->delete('/{uuid}', 'App\Http\Controllers\ProjectController@delete');
+		});
+
     });
 });
